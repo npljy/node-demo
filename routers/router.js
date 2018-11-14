@@ -23,14 +23,16 @@ exports.router = function(req, res) {
     }
 
     if (pathName != "/favicon.ico") {
+
         let ext = path.extname(pathName);
         ext && (pathName === '/index.html') && (pathName = 'static/index.html');
         !ext && (pathName = routerPath + '/index.html', ext = '.html');
-        console.log("pathName " + pathName)
+
         fs.readFile('../' + pathName, function(err, data) {
             if (err) {
                 res.writeHead(200, { "Content-type": "text/html;charset = 'utf-8'" })
                 fs.readFile('../static/404.html', function(err, data) {
+                    //res 将读取到文件内容 返回到页面中
                     res.end(data);
                 })
 
@@ -41,6 +43,7 @@ exports.router = function(req, res) {
                 // console.log("ext " + ext)
                 // console.log("contType " + contType)
                 res.writeHead(200, { "Content-type": contType + ";charset = 'utf-8'" })
+                    //res 将读取到文件内容 返回到页面中
                 res.end(data);
             }
         })
